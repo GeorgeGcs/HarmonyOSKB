@@ -1,39 +1,45 @@
-## 【HarmonyOS】鸿蒙应用蓝牙功能实现 （三）
+## 【HarmonyOS】Bluetooth Function Implementation in HarmonyOS Applications (Part 3)  
 
-## 一、蓝牙配对业务流程
+\##HarmonyOS Development Capabilities ##HarmonyOS SDK Application Services ##HarmonyOS Financial Applications （Financial Management #  
 
-**1‌.设备进入可被发现模式‌：**
-首先，设备需要进入可被发现模式，这样周围的蓝牙设备才能识别到它。一方设备（如手机）会主动搜索附近的蓝牙设备，并列出所有可用的配对选项。
+### I. Bluetooth Pairing Business Process  
 
-**2‌.选择并触发配对请求‌：**
-用户从列表中选择想要连接的设备，并触发配对请求。此时，双方设备会交换一系列的身份验证信息，以确保彼此的身份安全无误。在这个过程中，可能会要求用户输入配对码（如PIN码）或在设备上确认配对请求。
+**1. Device Enters Discoverable Mode:**  
+First, the device must enter discoverable mode so nearby Bluetooth devices can detect it. One device (e.g., a smartphone) actively scans for nearby Bluetooth devices and lists all available pairing options.  
 
-**3‌.身份验证和加密‌：**
-一旦身份验证通过，设备间就会建立安全的连接通道，这一过程称为“配对成功”。配对完成后，设备之间的连接就建立了，它们可以开始传输数据。
+**2. Select and Trigger Pairing Request:**  
+The user selects a device from the list and triggers a pairing request. The devices exchange authentication information to verify each other's identity, which may require entering a pairing code (e.g., PIN) or confirming the request on the device.  
 
-**4‌.数据传输‌：**
-设备间通过蓝牙进行数据传输，可以传输音频、文件等多种类型的数据。
+**3. Authentication and Encryption:**  
+Once authentication succeeds, a secure connection channel is established ("pairing successful"). The devices can then start transmitting data.  
 
-**5‌.断开连接‌：**
-当数据传输完成后，蓝牙设备可以断开连接。断开连接的操作可以通过设备上的按钮或者软件来实现。
+**4. Data Transmission:**  
+Devices transfer data via Bluetooth, supporting various types like audio and files.  
 
-***蓝牙配对通常是一次性的，即一旦设备成功配对，它们会在后续的连接中自动识别并连接，无需再次进行配对过程（除非设备被重置或用户手动取消配对）***
+**5. Disconnect:**  
+After data transmission, Bluetooth devices can disconnect, either via physical buttons or software.  
 
-以下是传统的蓝牙配对流程图仅供参考：
-![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/dd71f42b942f4a798764c193312c3f14.png)
-## 二、常规蓝牙配对Demo效果：
-![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/d799380b1dad41889a24b3d4bbc96a4d.png)
+***Bluetooth pairing is typically one-time: once paired, devices automatically recognize each other for subsequent connections without re-pairing (unless reset or manually unpaired).***  
 
-**Demo包括以下内容：**
-1.蓝牙权限开启
-2.蓝牙开启/关闭
-3.蓝牙扫描开启/关闭
-4.蓝牙配对
-5.蓝牙code协议确认
+The traditional Bluetooth pairing flow chart is for reference:  
+![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/dd71f42b942f4a798764c193312c3f14.png)  
 
-## 三、常规蓝牙配对Demo源码：
 
-**蓝牙UI交互类**
+### II. Demo Effect of Regular Bluetooth Pairing  
+
+![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/d799380b1dad41889a24b3d4bbc96a4d.png)  
+
+**The demo includes the following features:**  
+1. Bluetooth permission enabling  
+2. Bluetooth on/off control  
+3. Bluetooth scanning on/off control  
+4. Bluetooth pairing  
+5. Bluetooth code protocol confirmation  
+
+
+### III. Source Code of Regular Bluetooth Pairing Demo  
+
+**Bluetooth UI Interaction Class**  
 ```dart
 import { access } from '@kit.ConnectivityKit';
 import { BusinessError } from '@kit.BasicServicesKit';
@@ -52,19 +58,19 @@ struct Index {
 
   private TAG: string = "BlueToothTest";
 
-  // 扫描状态定时器
+  // Scan status timer
   private mNumInterval: number = -1;
-  // 当前设备蓝牙名
+  // Current device Bluetooth name
   @State mCurrentDeviceName: string = "";
-  // 蓝牙状态
+  // Bluetooth status
   @State @Watch('onChangeBlueTooth') isStartBlueTooth: boolean = false;
-  // 蓝牙扫描状态
+  // Bluetooth scanning status
   @State @Watch('onChangeBlueTooth') isStartScan: boolean = false;
-  // 当前蓝牙权限
+  // Current Bluetooth permission status
   @State userGrant: boolean = false;
-  // 扫描到设备名
+  // Discovered device list
   @State mMapDevice: HashMap<string, DeviceInfo> = new HashMap();
-  // ui展现的设备列表
+  // UI-displayed device list
   @State mListDeviceInfo: Array<DeviceInfo> = new Array();
 
   async aboutToAppear() {
@@ -90,7 +96,7 @@ struct Index {
     this.mCurrentDeviceName = BlueToothMgr.Ins().getCurrentDeviceName();
   }
 
-  // 用户申请权限
+  // Request user permission
   async reqPermissionsFromUser(): Promise<number[]> {
     let context = getContext() as common.UIAbilityContext;
     let atManager = abilityAccessCtrl.createAtManager();
@@ -98,29 +104,29 @@ struct Index {
     return grantStatus.authResults;
   }
 
-  // 用户申请蓝牙权限
+  // Request Bluetooth permission
   async requestBlueToothPermission() {
     let grantStatus = await this.reqPermissionsFromUser();
     for (let i = 0; i < grantStatus.length; i++) {
       if (grantStatus[i] === 0) {
-        // 用户授权，可以继续访问目标操作
+        // User authorized
         this.userGrant = true;
-        promptAction.showToast({ message: "蓝牙授权成功！"});
+        promptAction.showToast({ message: "Bluetooth authorization successful!"});
       }else{
-        promptAction.showToast({ message: "蓝牙授权失败！"});
+        promptAction.showToast({ message: "Bluetooth authorization failed!"});
       }
     }
   }
 
   setBlueToothScan = ()=>{
     if(!this.isStartScan){
-      promptAction.showToast({ message: "开启扫描！"});
+      promptAction.showToast({ message: "Scan started!"});
       BlueToothMgr.Ins().startScanDevice((data: Array<string>)=>{
         let deviceId: string = data[0];
         if(this.mMapDevice.hasKey(deviceId)){
-          // 重复设备，丢弃不处理
+          // Skip duplicate devices
         }else{
-          // 添加到表中
+          // Add to map
           let deviceInfo: DeviceInfo = new DeviceInfo();
           deviceInfo.deviceId = deviceId;
           deviceInfo.deviceName = BlueToothMgr.Ins().getDeviceName(deviceId);
@@ -131,7 +137,7 @@ struct Index {
       });
       this.mMapDevice.clear();
       this.mListDeviceInfo = [];
-      // 开启定时器
+      // Start timer
       this.mNumInterval = setInterval(()=>{
         let discovering = BlueToothMgr.Ins().isCurrentDiscovering();
         if(!discovering){
@@ -140,7 +146,7 @@ struct Index {
       }, 1000);
       this.isStartScan = true;
     }else{
-      promptAction.showToast({ message: "关闭扫描！"});
+      promptAction.showToast({ message: "Scan stopped!"});
       BlueToothMgr.Ins().stopScanDevice();
       this.closeScanDevice();
     }
@@ -154,12 +160,12 @@ struct Index {
   setBlueToothState = ()=>{
     try {
       if(!this.isStartBlueTooth){
-        // 开启蓝牙
+        // Turn on Bluetooth
         BlueToothMgr.Ins().setBlueToothAccess(true, (state: access.BluetoothState) => {
           console.log(this.TAG, "getState setBlueToothAccessTrue: " + state);
           if(state == access.BluetoothState.STATE_ON){
             this.isStartBlueTooth = true;
-            promptAction.showToast({ message: "开启蓝牙！"});
+            promptAction.showToast({ message: "Bluetooth turned on!"});
             console.log(this.TAG, "getState isStartBlueTooth: " + this.isStartBlueTooth);
           }
         });
@@ -168,7 +174,7 @@ struct Index {
           console.log(this.TAG, "getState setBlueToothAccessFalse: " + state);
           if(state == access.BluetoothState.STATE_OFF){
             this.isStartBlueTooth = false;
-            promptAction.showToast({ message: "关闭蓝牙！"});
+            promptAction.showToast({ message: "Bluetooth turned off!"});
             console.log(this.TAG, "getState isStartBlueTooth: " + this.isStartBlueTooth);
           }
         });
@@ -187,18 +193,18 @@ struct Index {
     Column() {
       if(this.userGrant){
         if(this.isLog()){
-          Text("当前蓝牙设备信息:\n " + this.mCurrentDeviceName)
+          Text("Current Bluetooth device info:\n " + this.mCurrentDeviceName)
             .fontSize(px2fp(80))
             .margin({ top: px2vp(100) })
             .fontWeight(FontWeight.Bold)
 
-          Text(this.isStartBlueTooth ? "蓝牙状态: 开启" : "蓝牙状态: 关闭")
+          Text(this.isStartBlueTooth ? "Bluetooth status: On" : "Bluetooth status: Off")
             .fontSize(px2fp(80))
             .margin({ top: px2vp(100) })
             .fontWeight(FontWeight.Bold)
             .onClick(this.setBlueToothState)
 
-          Text(this.isStartScan ? "蓝牙扫描: 开启ing" : "蓝牙扫描: 关闭")
+          Text(this.isStartScan ? "Bluetooth scanning: On" : "Bluetooth scanning: Off")
             .margin({ top: px2vp(100) })
             .fontSize(px2fp(80))
             .fontWeight(FontWeight.Bold)
@@ -219,9 +225,9 @@ struct Index {
         ListItem() {
           Column(){
             Row() {
-              Text("设备ID: " + item.deviceId).fontSize(px2fp(42)).fontColor(Color.Black)
+              Text("Device ID: " + item.deviceId).fontSize(px2fp(42)).fontColor(Color.Black)
               Blank()
-              Text("设备名: " + item.deviceName).fontSize(px2fp(42)).fontColor(Color.Black)
+              Text("Device name: " + item.deviceName).fontSize(px2fp(42)).fontColor(Color.Black)
             }
             .width('100%')
             Text(item.deviceClass).fontSize(px2fp(42)).fontColor(Color.Black)
@@ -230,26 +236,26 @@ struct Index {
           .height(px2vp(200))
           .justifyContent(FlexAlign.Start)
           .onClick(()=>{
-            // 点击选择处理配对
+            // Handle pairing on click
             AlertDialog.show({
-              title:"选择配对",
-              message:"是否选择该设备进行蓝牙配对？",
+              title:"Select to Pair",
+              message:"Do you want to pair with this device?",
               autoCancel: true,
               primaryButton: {
-                value:"确定",
+                value:"Confirm",
                 action:()=>{
-                  promptAction.showToast({ message: item.deviceName + "配对ing！"});
+                  promptAction.showToast({ message: item.deviceName + " pairing in progress!"});
                   BlueToothMgr.Ins().pairDevice(item.deviceId);
                 }
               },
               secondaryButton: {
-                value:"取消",
+                value:"Cancel",
                 action:()=>{
-                  promptAction.showToast({ message: "取消！"});
+                  promptAction.showToast({ message: "Cancelled!"});
                 }
               },
               cancel:()=>{
-                promptAction.showToast({ message: "取消！"});
+                promptAction.showToast({ message: "Cancelled!"});
               }
             })
           })
@@ -259,9 +265,9 @@ struct Index {
     .width('100%')
   }
 }
-```
+```  
 
-**蓝牙管理类**
+**Bluetooth Management Class**  
 ```dart
 import { access, ble } from '@kit.ConnectivityKit';
 import { BusinessError } from '@kit.BasicServicesKit';
@@ -273,7 +279,7 @@ export class BlueToothMgr {
 
   private static mBlueToothMgr: BlueToothMgr | undefined = undefined;
 
-  private advHandle: number = 0xFF; // default invalid value
+  private advHandle: number = 0xFF; // Default invalid handle
 
   private mDeviceDiscoverArr: Array<string> = new Array<string>();
 
@@ -288,7 +294,7 @@ export class BlueToothMgr {
   private static init(){
     try {
       connection.on('pinRequired', (data: connection.PinRequiredParam) =>{
-        // data为配对请求参数
+        // data is the pairing request parameter
         console.info("BlueToothTest",'pinRequired pin required = '+ JSON.stringify(data));
       });
     } catch (err) {
@@ -297,7 +303,7 @@ export class BlueToothMgr {
   }
 
   /**
-   * 当前设备蓝牙设备名称
+   * Get the current device's Bluetooth name
    */
   public getCurrentDeviceName(){
     let localName: string = "";
@@ -311,7 +317,7 @@ export class BlueToothMgr {
   }
 
   /**
-   * 当前设备蓝牙可发现状态
+   * Check if the current device is discoverable
    */
   public isCurrentDiscovering(){
     let res: boolean = false;
@@ -324,13 +330,13 @@ export class BlueToothMgr {
     return res;
   }
 
-  // STATE_OFF	0	表示蓝牙已关闭。
-  // STATE_TURNING_ON	1	表示蓝牙正在打开。
-  // STATE_ON	2	表示蓝牙已打开。
-  // STATE_TURNING_OFF	3	表示蓝牙正在关闭。
-  // STATE_BLE_TURNING_ON	4	表示蓝牙正在打开LE-only模式。
-  // STATE_BLE_ON	5	表示蓝牙正处于LE-only模式。
-  // STATE_BLE_TURNING_OFF	6	表示蓝牙正在关闭LE-only模式。
+  // STATE_OFF	0	Bluetooth is off.
+  // STATE_TURNING_ON	1	Bluetooth is turning on.
+  // STATE_ON	2	Bluetooth is on.
+  // STATE_TURNING_OFF	3	Bluetooth is turning off.
+  // STATE_BLE_TURNING_ON	4	Bluetooth is turning on in LE-only mode.
+  // STATE_BLE_ON	5	Bluetooth is in LE-only mode.
+  // STATE_BLE_TURNING_OFF	6	Bluetooth is turning off from LE-only mode.
 
   public getBlueToothState(): access.BluetoothState {
     let state = access.getState();
@@ -338,8 +344,8 @@ export class BlueToothMgr {
   }
 
   /**
-   * 设置蓝牙访问(开关状态)
-   * @param isAccess true: 打开蓝牙
+   * Set Bluetooth access status (on/off)
+   * @param isAccess true: Turn on Bluetooth
    */
   setBlueToothAccess(isAccess: boolean, callbackBluetoothState: Callback<access.BluetoothState>){
     try {
@@ -352,7 +358,7 @@ export class BlueToothMgr {
           if (btStateMessage == 'STATE_ON') {
             access.off('stateChange');
           }
-          console.info(this.TAG, 'bluetooth statues: ' + btStateMessage);
+          console.info(this.TAG, 'bluetooth status: ' + btStateMessage);
           callbackBluetoothState(data);
         })
       }else{
@@ -364,7 +370,7 @@ export class BlueToothMgr {
           if (btStateMessage == 'STATE_OFF') {
             access.off('stateChange');
           }
-          console.info(this.TAG, "bluetooth statues: " + btStateMessage);
+          console.info(this.TAG, "bluetooth status: " + btStateMessage);
           callbackBluetoothState(data);
         })
       }
@@ -405,7 +411,7 @@ export class BlueToothMgr {
   }
 
   /**
-   * 主播蓝牙广播
+   * Register for Bluetooth advertising events
    */
   public registerBroadcast(){
     try {
@@ -419,23 +425,19 @@ export class BlueToothMgr {
   }
 
   /**
-   * 开启蓝牙广播
+   * Start BLE advertising
    */
   public async startBroadcast(valueBuffer: Uint8Array){
 
-    // 表示发送广播的相关参数。
+    // Advertising settings
     let setting: ble.AdvertiseSetting = {
-      // 表示广播间隔，最小值设置160个slot表示100ms，最大值设置16384个slot，默认值设置为1600个slot表示1s。
-      interval: 160,
-      // 表示发送功率，最小值设置-127，最大值设置1，默认值设置-7，单位dbm。推荐值：高档（1），中档（-7），低档（-15）。
-      txPower: 0,
-      // 表示是否是可连接广播，默认值设置为true，表示可连接，false表示不可连接。
-      connectable: true
+      interval: 160,         // Advertising interval (160 slots = 100ms)
+      txPower: 0,            // Transmission power (0 = medium)
+      connectable: true      // Connectable advertising
     };
 
-    // BLE广播数据包的内容。
+    // Manufacturer-specific data in advertisement
     let manufactureDataUnit: ble.ManufactureData = {
-      // 表示制造商的ID，由蓝牙SIG分配。
       manufactureId: 4567,
       manufactureValue: valueBuffer.buffer
     };
@@ -446,37 +448,36 @@ export class BlueToothMgr {
     serviceValueBuffer[2] = 7;
     serviceValueBuffer[3] = 8;
 
-    // 广播包中服务数据内容。
+    // Service data in advertisement
     let serviceDataUnit: ble.ServiceData = {
       serviceUuid: "00001888-0000-1000-8000-00805f9b34fb",
       serviceValue: serviceValueBuffer.buffer
     };
 
-    // 表示广播的数据包内容。
+    // Advertisement data content
     let advData: ble.AdvertiseData = {
       serviceUuids: ["00001888-0000-1000-8000-00805f9b34fb"],
       manufactureData: [manufactureDataUnit],
       serviceData: [serviceDataUnit],
-      includeDeviceName: false // 表示是否携带设备名，可选参数。注意带上设备名时广播包长度不能超出31个字节。
+      includeDeviceName: false // Optional, do not exceed 31 bytes if included
     };
 
-    // 表示回复扫描请求的响应内容。
+    // Scan response data
     let advResponse: ble.AdvertiseData = {
       serviceUuids: ["00001888-0000-1000-8000-00805f9b34fb"],
       manufactureData: [manufactureDataUnit],
       serviceData: [serviceDataUnit]
     };
 
-    // 首次启动广播设置的参数。
+    // Advertising parameters
     let advertisingParams: ble.AdvertisingParams = {
       advertisingSettings: setting,
       advertisingData: advData,
       advertisingResponse: advResponse,
-      // 	表示发送广播持续的时间。单位为10ms，有效范围为1(10ms)到65535(655350ms)，如果未指定此参数或者将其设置为0，则会连续发送广播。
-      duration: 0 // 可选参数，若大于0，则广播发送一段时间后，则会临时停止，可重新启动发送
+      duration: 0  // 0 = continuous advertising
     }
 
-    // 首次启动广播，且获取所启动广播的标识ID
+    // Start advertising and get handle
     try {
       this.registerBroadcast();
       this.advHandle = await ble.startAdvertising(advertisingParams);
@@ -486,12 +487,12 @@ export class BlueToothMgr {
   }
 
   /**
-   * 开始蓝牙扫描
+   * Start Bluetooth scanning
    */
   public startScanDevice(callback: Callback<Array<string>>){
     try {
       connection.on('bluetoothDeviceFind', (data: Array<string>)=>{
-        // 随机MAC地址
+        // Random MAC address
         console.info(this.TAG, 'bluetooth device bluetoothDeviceFind = '+ JSON.stringify(data));
         callback(data);
       });
@@ -502,7 +503,7 @@ export class BlueToothMgr {
   }
 
   /**
-   * 停止蓝牙扫描
+   * Stop Bluetooth scanning
    */
   public stopScanDevice(){
     try {
@@ -536,18 +537,18 @@ export class BlueToothMgr {
   }
 
   // BondState
-  // BOND_STATE_INVALID	0	无效的配对。
-  // BOND_STATE_BONDING	1	正在配对。
-  // BOND_STATE_BONDED	2	已配对。
+  // BOND_STATE_INVALID	0	Invalid pairing.
+  // BOND_STATE_BONDING	1	Pairing in progress.
+  // BOND_STATE_BONDED	2	Paired.
 
   /**
-   * 发起配对蓝牙
+   * Initiate Bluetooth pairing
    */
   public pairDevice(deviceID: string){
     try {
       connection.on('bondStateChange', (data: connection.BondStateParam) =>{
         console.info(this.TAG, 'pairDevice pair state = '+ JSON.stringify(data));
-        // 当蓝牙配对类型PinType为PIN_TYPE_ENTER_PIN_CODE或PIN_TYPE_PIN_16_DIGITS时调用此接口，请求用户输入PIN码。
+        // Call when pairing type is PIN_TYPE_ENTER_PIN_CODE or PIN_TYPE_PIN_16_DIGITS
       });
       connection.pairDevice(deviceID, (err: BusinessError) => {
         console.info(this.TAG, 'pairDevice device name err:' + JSON.stringify(err));
@@ -556,13 +557,11 @@ export class BlueToothMgr {
       console.error(this.TAG, 'pairDevice errCode: ' + (err as BusinessError).code + ', errMessage: ' + (err as BusinessError).message);
     }
   }
-
 }
+```  
 
-```
+![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/fda00352f394401cbc3a6b884469f6ce.png![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/2208c37af700411ea0140f7e4141d59c.png)  
 
-![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/fda00352f394401cbc3a6b884469f6ce.png![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/2208c37af700411ea0140f7e4141d59c.png)
-
-[DEMO完成示例资源下载链接](https://download.csdn.net/download/u010949451/89673582)
+[Download Link for Completed Demo Resources](https://download.csdn.net/download/u010949451/89673582)  
 
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/76f52513c0ee45ddbf7d07406fa37c07.png)
