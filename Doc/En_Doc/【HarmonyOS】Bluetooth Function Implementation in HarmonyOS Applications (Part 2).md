@@ -1,4 +1,4 @@
-## 【HarmonyOS】Bluetooth Function Implementation in HarmonyOS Applications (Part 2)  
+## 【HarmonyOS 5】Bluetooth Function Implementation in HarmonyOS Applications (Part 2)  
 
 \##HarmonyOS Development Capabilities ##HarmonyOS SDK Application Services ##HarmonyOS Financial Applications （Financial Management #  
 
