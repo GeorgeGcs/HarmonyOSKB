@@ -1,4 +1,4 @@
-## 【HarmonyOS】Avatar Cropping with Gesture Zooming, Panning, and Double-Tap Control (Part 3)  
+## 【HarmonyOS 5】Avatar Cropping with Gesture Zooming, Panning, and Double-Tap Control (Part 3)  
 
 \##HarmonyOS Development Capabilities ##HarmonyOS SDK Application Services ##HarmonyOS Financial Applications （Financial Management#  
 
