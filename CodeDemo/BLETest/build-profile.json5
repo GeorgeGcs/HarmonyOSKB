@@ -1,0 +1,55 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\15801\\.ohos\\config\\default_BLETest_1MnNuZdnh9CDo79OWKr898nZRt-UARgnqKp8j8zUN8E=.cer",
+          "storePassword": "0000001BB200E1A8A22F5069728AE4B0CD696AA0792369D0189B01EC32348276D2323D70591F872F18901D",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001BC107496C018CD076C49E240D228119F5E24DE305A5B05BDAF57495F6FFD24A1043DB598B11B376",
+          "profile": "C:\\Users\\15801\\.ohos\\config\\default_BLETest_1MnNuZdnh9CDo79OWKr898nZRt-UARgnqKp8j8zUN8E=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\15801\\.ohos\\config\\default_BLETest_1MnNuZdnh9CDo79OWKr898nZRt-UARgnqKp8j8zUN8E=.p12"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "compatibleSdkVersion": "5.0.0(12)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}

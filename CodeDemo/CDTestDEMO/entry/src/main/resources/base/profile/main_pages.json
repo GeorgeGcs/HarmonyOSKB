@@ -1,0 +1,11 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/FacePage",
+    "pages/FaceLivenessPage",
+    "pages/AlbumPage",
+    "pages/ScanPage",
+    "pages/NAVIPage",
+    "pages/LocationPage"
+  ]
+}

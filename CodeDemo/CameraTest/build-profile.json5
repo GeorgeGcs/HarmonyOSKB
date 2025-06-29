@@ -1,0 +1,55 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\lenovo\\.ohos\\config\\default_CameraTest_75q-QuemixmLyt0SLsg6lAAfuzd3LUex9CiF9BcaQBI=.cer",
+          "storePassword": "0000001BF6FC9CEE5E93853B7637BED15AB597B8832E88D0E7FC79BF26B9F60A6BE902C27B963D5AF895B2",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001BEBD5E4FF7EB7448483A409675B65F3F9D9060A4B7370706ACEAEEF54D0EC07F973E27723BA5DEC",
+          "profile": "C:\\Users\\lenovo\\.ohos\\config\\default_CameraTest_75q-QuemixmLyt0SLsg6lAAfuzd3LUex9CiF9BcaQBI=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\lenovo\\.ohos\\config\\default_CameraTest_75q-QuemixmLyt0SLsg6lAAfuzd3LUex9CiF9BcaQBI=.p12"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "compatibleSdkVersion": "5.0.0(12)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}
