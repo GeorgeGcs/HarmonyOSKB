@@ -1,12 +1,9 @@
-**【HarmonyOS】Imitating Personal Center Avatar: Camera Capture, Gallery Selection, and Circular Cropping Display (Part 2)**  
+**【HarmonyOS 5】Imitating Personal Center Avatar: Camera Capture, Gallery Selection, and Circular Cropping Display (Part 2)**  
 
 **#HarmonyOS Development Capabilities**  
 **#HarmonyOS SDK Application Services**  
 **#HarmonyOS Financial Applications (Financial Management)**  
 
-
-### Demo Preview:  
-![image.png](https://api.nutpi.net/file/topic/2025-06-20/image/ff55b7c911604c4b942c1e6a64b87eb9b1862.png)  
 
 
 ### Solution Approach:  
