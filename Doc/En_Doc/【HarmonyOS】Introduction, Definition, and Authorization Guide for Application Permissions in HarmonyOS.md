@@ -1,4 +1,4 @@
-# 【HarmonyOS】Introduction, Definition, and Authorization Guide for Application Permissions in HarmonyOS  
+# 【HarmonyOS 5】Introduction, Definition, and Authorization Guide for Application Permissions in HarmonyOS  
 
 \##HarmonyOS Development Capabilities ##HarmonyOS SDK Application Services##HarmonyOS Financial Applications (Financial Management#  
 
