@@ -1,10 +1,6 @@
-## 【HarmonyOS】Profile Image: Invoking System Camera, Selecting Images from System Album, and Circular Cropping Display (Part 1)  
+## 【HarmonyOS 5】Profile Image: Invoking System Camera, Selecting Images from System Album, and Circular Cropping Display (Part 1)  
 
 \##HarmonyOS Development Capabilities ##HarmonyOS SDK Application Services ##HarmonyOS Financial Applications （Financial Management#  
-
-### Demo Effect Display  
-
-![image.png](https://api.nutpi.net/file/topic/2025-06-20/image/f2001654e5464637a4b5ad85b29eb6c6b1862.png)  
 
 
 ### Solution Approach  
@@ -12,8 +8,6 @@
 1. **System Album Image Selection**: Use `photoAccessHelper` to implement album selection. This API allows accessing the user's album via the system's secure album component without requiring explicit user authorization.  
 
 2. **System Camera Invocation**: Use `startAbilityForResult` to jump to the system camera and return to the app after capturing a photo. **Note**: The `callBundleName` parameter in the `want` must match the app's package name; otherwise, the returned image URI will lack operation permissions.  
-
-![image.png](https://api.nutpi.net/file/topic/2025-06-20/image/29682a0840e34b618fd3fb3b71b276b9b1862.png)  
 
 3. **Circular Cropping Display**: Use Image's `borderRadius` property to crop and display images in a circular shape. The actual image remains rectangular.  
 
