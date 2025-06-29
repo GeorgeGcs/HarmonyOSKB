@@ -1,4 +1,4 @@
-## 【HarmonyOS】Deep Dive into @Observed and @ObjectLink Decorators: Nested Class Object Property Changes  
+## 【HarmonyOS 5】Deep Dive into @Observed and @ObjectLink Decorators: Nested Class Object Property Changes  
 
 **#HarmonyOS Development Capabilities**  
 **#HarmonyOS SDK Application Services**  
