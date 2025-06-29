@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Communication</title>
+</head>
+
+<body>
+<button onclick="callArkUIMethod()">Call ArkUI Method</button>
+<button onclick="sendMessageToArkUI()">Send message to ArkUI</button>
+<div id="messageFromArkUI"></div>
+<script>
+    function callArkUIMethod() {
+        const result = window.objName.test();
+        console.log("Result from ArkUI: ", result);
+    }
+
+    function sendMessageToArkUI() {
+        window.objName.receiveMessageFromWeb('Hello from web!');
+    }
+
+    function receiveMessageFromArkUI(message) {
+        const messageDiv = document.getElementById('messageFromArkUI');
+        messageDiv.textContent = `Received message from ArkUI: ${message}`;
+    }
+
+    function getWebPageData() {
+        return "Data from web page";
+    }
+
+    function test() {
+        return "Test function result from web";
+    }
+</script>
+</body>
+
+</html>

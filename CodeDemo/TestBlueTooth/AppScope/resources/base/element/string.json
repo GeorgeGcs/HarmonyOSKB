@@ -1,0 +1,12 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "TestBlueTooth"
+    },
+    {
+      "name": "permission_name",
+      "value": "蓝牙权限申请"
+    }
+  ]
+}

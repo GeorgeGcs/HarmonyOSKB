@@ -1,0 +1,27 @@
+{
+  "module": {
+    "name": "sub",
+    "type": "feature",
+    "description": "$string:module_desc",
+    "mainElement": "SubAbility",
+    "deviceTypes": [
+      "phone"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "abilities": [
+      {
+        "name": "SubAbility",
+        "srcEntry": "./ets/subability/SubAbility.ets",
+        "description": "$string:SubAbility_desc",
+        "icon": "$media:layered_image",
+        "label": "$string:SubAbility_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": true,
+        "launchType": "multiton"
+      }
+    ]
+  }
+}

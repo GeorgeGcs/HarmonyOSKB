@@ -1,0 +1,49 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\15801\\.ohos\\config\\default_TestBlueTooth_pdCvAID3Xc3cDA1qEWct7m1x-nCf50kZON3YGNE7Zy4=.cer",
+          "storePassword": "0000001ACAEBA3A019F8A70B38D14D870349AE4CB80C575FF127F9A37C9B92A48AFEB82AE78FCE15C12F",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001A4D0DAAB6563D17E72852FA65CDB00AD72A3E2800146555A557D3293CBA0AD07C19491BF1F62B",
+          "profile": "C:\\Users\\15801\\.ohos\\config\\default_TestBlueTooth_pdCvAID3Xc3cDA1qEWct7m1x-nCf50kZON3YGNE7Zy4=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\15801\\.ohos\\config\\default_TestBlueTooth_pdCvAID3Xc3cDA1qEWct7m1x-nCf50kZON3YGNE7Zy4=.p12"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "compatibleSdkVersion": "5.0.0(12)",
+        "runtimeOS": "HarmonyOS",
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}
