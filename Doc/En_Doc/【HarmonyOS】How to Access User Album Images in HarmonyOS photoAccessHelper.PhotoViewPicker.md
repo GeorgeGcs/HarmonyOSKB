@@ -1,4 +1,4 @@
-## 【HarmonyOS】How to Access User Album Images in HarmonyOS? photoAccessHelper.PhotoViewPicker  
+## 【HarmonyOS 5】How to Access User Album Images in HarmonyOS? photoAccessHelper.PhotoViewPicker  
 
 \##HarmonyOS Development Capabilities ##HarmonyOS SDK Application Services ##HarmonyOS Financial Applications （Financial Management#  
 
